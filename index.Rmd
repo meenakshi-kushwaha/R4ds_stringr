@@ -141,7 +141,7 @@ str_view(x, "a$")
 
 ---
 # Regular Expressions - repetitions
-*How many types a pattery matches?*
+*How many times a pattern matches?*
 - `?`: 0 or 1
 - `+`: 1 or more
 - `*`: 0 or more
