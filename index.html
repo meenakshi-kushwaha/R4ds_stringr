@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Strings with stringr</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Meenakshi Kushwaha" />
+    <meta name="date" content="2021-02-28" />
+    <script src="libs/header-attrs-2.5/header-attrs.js"></script>
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+    <link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet" />
+    <script src="libs/str_view-binding-1.4.0/str_view.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: top, left, title-slide
+
+# Strings with stringr
+## R for Data Science
+### Meenakshi Kushwaha
+### Rstudio instructor training study group
+### 2021-02-28
+
+---
+
+
+![](images/Et6wmedVkAM7467.jpeg)
+.footnote[Image by @allison_horst]
+
+---
+# Usage
+- All functions start with `str_` 
+- First argument is a vector of strings
+- Work with **regular expressions**
+  - concise language for describing patterns of text
+
+
+---
+Reg ex
+
+---
+#Key `stringr` functions
+
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Problem &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Functions &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Lenth of a string &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; str_length &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Combining strings &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; str_c &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Convert letter case &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; str_to_upper/lower/title &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Trim whitespace &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; str_trim/squish &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Detect a pattern &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; str_detect &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Get strings/positions matching a pattern &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; str_subset/which &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Extract/Replace &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; str_sub &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# Basics - String length
+
+
+```r
+library(stringr)
+str_length(c("a", "R for data science", NA))
+```
+
+```
+## [1]  1 18 NA
+```
+
+---
+# Basics - Combining strings
+- Is it a vector or a string objects?
+- Do you need a separator?
+
+
+--
+
+
+```r
+str_c("x", "y", "z")
+```
+
+```
+## [1] "xyz"
+```
+--
+
+--&gt; Use `sep` to control how they are seperated
+
+```r
+str_c("x", "y", sep = ", ")
+```
+
+```
+## [1] "x, y"
+```
+
+--
+
+
+--&gt; To collapse a **vector** of strings into a single string, use `collapse`
+
+```r
+str_c(c("x", "y", "z"), collapse = ", ")
+```
+
+```
+## [1] "x, y, z"
+```
+
+
+---
+# Basics - Trim whitespace
+
+![](images/str_squish.png)
+.footnote[Artwork by Allison Horst]
+---
+class: inverse, middle, center
+
+# Pattern matching with **Reg**ular **Ex**pressions
+
+---
+# Regular Expressions - Basics
+
+Match exact strings
+
+```r
+x &lt;- c("apple", "banana", "pear")
+str_view(x, "an")
+```
+
+<div id="htmlwidget-64b3f0d8c233d91bfae6" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-64b3f0d8c233d91bfae6">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+
+To match any character except a new line use `.`
+
+```r
+str_view(x, ".a.")
+```
+
+<div id="htmlwidget-10b3c2468f2fafdb2066" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-10b3c2468f2fafdb2066">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+*How do we match a pattern with `.`?*  
+To escape special character behaviour use `\`
+We use strings to represent regular expressions, and `\`is also used as an escape symbol in strings. So to create the regular expression `\.` we need the string `"\\."`.
+
+
+```r
+str_view(c("abc", "a.c", "bef"), "a\\.c")
+```
+
+<div id="htmlwidget-56de2f3c2b7ebf2c09ea" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-56de2f3c2b7ebf2c09ea">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+---
+# Regular Expression - Anchors
+![](images/anchors.png)
+
+
+.pull-left[
+
+```r
+x &lt;- c("apple", "banana", "pear")
+str_view(x, "^a")
+```
+
+<div id="htmlwidget-a3ed49fa44be26b0a791" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a3ed49fa44be26b0a791">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>pple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+]
+
+.pull-right[
+
+```r
+x &lt;- c("apple", "banana", "pear")
+str_view(x, "a$")
+```
+
+<div id="htmlwidget-19ec44c5b8f3011e4a29" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-19ec44c5b8f3011e4a29">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+]
+---
+# Regular Expressions - Character class and alternatives
+
+- `\d`: matches any digit.
+- `\s`: matches any whitespace (e.g. space, tab, newline).
+- `[abc]`: matches a, b, or c.
+- `[^abc]`: matches anything except a, b, or c.
+
+---
+# Regular Expressions - repetitions
+*How many types a pattery matches?*
+- `?`: 0 or 1
+- `+`: 1 or more
+- `*`: 0 or more
+
+You can also specify the number of matches precisely:
+- `{n}`: exactly n
+- `{n,}`: n or more
+- `{,m}`: at most m
+- `{n,m}`: between n and m
+
+---
+# Pattern matching with RegEx
+#### `str_detect`
+
+.left-column[
+![](images/str_detect.png)
+]
+
+
+.right-column[
+
+
+```r
+x &lt;- c("apple", "banana", "pear")
+str_detect(x, "e")
+```
+
+```
+## [1]  TRUE FALSE  TRUE
+```
+
+
+```r
+# How many common words start with t?
+sum(str_detect(words, "^t"))
+```
+
+```
+## [1] 65
+```
+
+```r
+# What proportion of common words end with a vowel?
+mean(str_detect(words, "[aeiou]$"))
+```
+
+```
+## [1] 0.2765306
+```
+
+]
+---
+# Pattern matching with RegEx
+#### `str_count`
+.left-column[
+![](images/str_count.png)
+]
+
+.right-column[
+
+
+```r
+x &lt;- c("apple", "banana", "pear")
+str_count(x, "a")
+```
+
+```
+## [1] 1 3 1
+```
+
+```r
+# On average, how many vowels per word?
+mean(str_count(words, "[aeiou]"))
+```
+
+```
+## [1] 1.991837
+```
+
+
+]
+
+---
+# Pattern matching with RegEx
+#### `str_subset/extract`
+We want to find all sentences that have a color
+
+```r
+colours &lt;- c("red", "orange", "yellow", "green", "blue", "purple")
+colour_match &lt;- str_c(colours, collapse = "|")
+colour_match
+```
+
+```
+## [1] "red|orange|yellow|green|blue|purple"
+```
+
+```r
+has_colour &lt;- str_subset(sentences, colour_match)
+matches &lt;- str_extract(has_colour, colour_match)
+head(matches)
+```
+
+```
+## [1] "blue" "blue" "red"  "red"  "red"  "blue"
+```
+
+NOTE  
+`str_extract()` only extracts the first match.To get all matches, use `str_extract_all()`
+
+---
+# Pattern matching with RegEx
+####  `str_replace`
+
+
+```r
+x &lt;- c("apple", "pear", "banana")
+str_replace(x, "[aeiou]", "-")
+```
+
+```
+## [1] "-pple"  "p-ar"   "b-nana"
+```
+
+```r
+str_replace_all(x, "[aeiou]", "-")
+```
+
+```
+## [1] "-ppl-"  "p--r"   "b-n-n-"
+```
+
+---
+
+# Other tools - splitting
+#### `str_split`
+
+
+
+```r
+sentences %&gt;%
+  head(2) %&gt;% 
+  str_split(" ")
+```
+
+```
+## [[1]]
+## [1] "The"     "birch"   "canoe"   "slid"    "on"      "the"     "smooth"  "planks."
+## 
+## [[2]]
+## [1] "Glue"        "the"         "sheet"       "to"          "the"         "dark"       
+## [7] "blue"        "background."
+```
+
+---
+
+class: inverse, middle, center
+
+#`Stringr` cheatsheet
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
