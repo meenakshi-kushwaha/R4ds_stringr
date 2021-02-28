@@ -35,10 +35,6 @@ class: top, left, title-slide
 - Work with **regular expressions**
   - concise language for describing patterns of text
 
-
----
-Reg ex
-
 ---
 #Key `stringr` functions
 
@@ -157,8 +153,8 @@ x &lt;- c("apple", "banana", "pear")
 str_view(x, "an")
 ```
 
-<div id="htmlwidget-64b3f0d8c233d91bfae6" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-64b3f0d8c233d91bfae6">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-57a3e4fbe1e6ae956290" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-57a3e4fbe1e6ae956290">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>b<span class='match'>an<\/span>ana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 
 To match any character except a new line use `.`
 
@@ -166,8 +162,8 @@ To match any character except a new line use `.`
 str_view(x, ".a.")
 ```
 
-<div id="htmlwidget-10b3c2468f2fafdb2066" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-10b3c2468f2fafdb2066">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-dc4b1be7fa6048d53ec6" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dc4b1be7fa6048d53ec6">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li><span class='match'>ban<\/span>ana<\/li>\n  <li>p<span class='match'>ear<\/span><\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 *How do we match a pattern with `.`?*  
 To escape special character behaviour use `\`
 We use strings to represent regular expressions, and `\`is also used as an escape symbol in strings. So to create the regular expression `\.` we need the string `"\\."`.
@@ -177,8 +173,8 @@ We use strings to represent regular expressions, and `\`is also used as an escap
 str_view(c("abc", "a.c", "bef"), "a\\.c")
 ```
 
-<div id="htmlwidget-56de2f3c2b7ebf2c09ea" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-56de2f3c2b7ebf2c09ea">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7bc7b6d26a910a1a0ee7" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7bc7b6d26a910a1a0ee7">{"x":{"html":"<ul>\n  <li>abc<\/li>\n  <li><span class='match'>a.c<\/span><\/li>\n  <li>bef<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 ---
 # Regular Expression - Anchors
 ![](images/anchors.png)
@@ -191,8 +187,8 @@ x &lt;- c("apple", "banana", "pear")
 str_view(x, "^a")
 ```
 
-<div id="htmlwidget-a3ed49fa44be26b0a791" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a3ed49fa44be26b0a791">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>pple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f500391a9f2e0dd803f1" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f500391a9f2e0dd803f1">{"x":{"html":"<ul>\n  <li><span class='match'>a<\/span>pple<\/li>\n  <li>banana<\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right[
@@ -202,8 +198,8 @@ x &lt;- c("apple", "banana", "pear")
 str_view(x, "a$")
 ```
 
-<div id="htmlwidget-19ec44c5b8f3011e4a29" style="width:960px;height:100%;" class="str_view html-widget"></div>
-<script type="application/json" data-for="htmlwidget-19ec44c5b8f3011e4a29">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-7f1350a98456240e6ce9" style="width:960px;height:100%;" class="str_view html-widget"></div>
+<script type="application/json" data-for="htmlwidget-7f1350a98456240e6ce9">{"x":{"html":"<ul>\n  <li>apple<\/li>\n  <li>banan<span class='match'>a<\/span><\/li>\n  <li>pear<\/li>\n<\/ul>"},"evals":[],"jsHooks":[]}</script>
 ]
 ---
 # Regular Expressions - Character class and alternatives

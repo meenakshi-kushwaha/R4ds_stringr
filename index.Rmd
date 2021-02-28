@@ -24,10 +24,6 @@ output:
 - Work with **regular expressions**
   - concise language for describing patterns of text
 
-
----
-Reg ex
-
 ---
 #Key `stringr` functions
 
